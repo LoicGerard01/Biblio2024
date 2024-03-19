@@ -1,4 +1,4 @@
-package biblio.metier;
+package bibliotheque.metier;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,10 +57,6 @@ public class Rayon {
 
     public void setLex(List<Exemplaire> lex) {
         this.lex = lex;
-    }
-
-    public void listerExemplaires(){
-
     }
 
 

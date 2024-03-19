@@ -1,4 +1,4 @@
-package biblio.metier;
+package bibliotheque.metier;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,7 +51,7 @@ public class Exemplaire {
         this.descriptionEtat = descriptionEtat;
     }
 
-     public Ouvrage getOuvrage() {
+    public Ouvrage getOuvrage() {
         return ouvrage;
     }
 
@@ -88,30 +88,40 @@ public class Exemplaire {
     }
 
     public void modifierEtat(String etat){
-
+        //TODO modifier etat exemplaire
     }
-    public void lecteurActuel(){
 
+    public Lecteur lecteurActuel(){
+        //TODO lecteur actuel exemplaire
+        return null;
     }
-    public void lecteurs(){
+    public List<Lecteur> lecteurs(){
+        //lecteurs exemplaire
+        return null;
+    }
 
-    }
     public void envoiMailLecteurActuel(Mail mail){
-
+        //TODO envoi mail lecteur exemplaire
     }
     public void envoiMailLecteurs(Mail mail){
-
+        //TODO envoi mail lecteurs exemplaire
     }
+
     public boolean enRetard(){
+        //TODO enretard exeplaire
         return false;
     }
+
     public int joursRetard(){
+        //TODO jours retard exemplaire
         return 0;
     }
+
+
     public boolean enLocation(){
+        //TODO en location exemplaires
         return false;
     }
-
 
 
 }

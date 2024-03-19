@@ -1,15 +1,17 @@
-package biblio.metier;
+package bibliotheque.metier;
 
 import java.time.LocalDate;
 import java.util.Objects;
+
+import static bibliotheque.metier.TypeOuvrage.CD;
 
 public class CD extends Ouvrage{
     private long code;
     private byte nbrePlages;
     private String dureeTotale;
 
-    public CD(String titre, int ageMin, LocalDate dateParution, TypeOuvrage to, double prixLocation, String langue, String genre, long code, byte nbrePlages, String dureeTotale) {
-        super(titre, ageMin, dateParution, to, prixLocation, langue, genre);
+    public CD(String titre, int ageMin, LocalDate dateParution, double prixLocation, String langue, String genre, long code, byte nbrePlages, String dureeTotale) {
+        super(titre, ageMin, dateParution, CD, prixLocation, langue, genre);
         this.code=code;
         this.nbrePlages=nbrePlages;
         this.dureeTotale=dureeTotale;
@@ -53,16 +55,16 @@ public class CD extends Ouvrage{
     }
 
     @Override
-    public double amendeRetard(int njours) {
-        return 0;
-    }
-
-    @Override
     public String toString() {
         return super.toString()+"CD{" +
                 "code=" + code +
                 ", nbrePlages=" + nbrePlages +
                 ", dureeTotale='" + dureeTotale + '\'' +
                 "} " + super.toString();
+    }
+    @Override
+    public double amendeRetard(int njours) {
+        //TODO amendeRetard CD
+        return 0;
     }
 }

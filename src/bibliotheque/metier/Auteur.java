@@ -1,12 +1,11 @@
-package biblio.metier;
+package bibliotheque.metier;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public class Auteur {
-    private String nom;
-    private String prenom;
+    private  String nom,prenom;
     private String nationalite;
     private List<Ouvrage> louvrage = new ArrayList<>();
 
@@ -69,17 +68,31 @@ public class Auteur {
                 ", nationalite='" + nationalite + '\'' +
                 '}';
     }
-
-    public void listerOuvrages(){
-
-    }
-    public void listerOuvrages(TypeOuvrage typeOuvrage,TypeLivre typeLivre){
-
+    public void addOuvrage(Ouvrage o ){
+        louvrage.add(o);
+        o.getLauteurs().add(this);
     }
 
-    public void listerOuvrages(String genre){
-
+    public void remove(Ouvrage o){
+        louvrage.remove(o);
+        o.getLauteurs().remove(this);
     }
 
+    public List<Ouvrage> listerOuvrages(){
+        //TODO lister ouvrages
+        return null;
+    }
 
+    public List<Ouvrage> listerOuvrages(TypeOuvrage to){
+        //TODO lister ouvrages d'un type
+        return null;
+    }
+    public List<Livre> listerLivres(TypeLivre tl){
+        //TODO lister livres d'un type
+        return null;
+    }
+    public List<Ouvrage> listerOuvrages(String genre){
+        //TODO lister ouvrages d'un genre
+        return null;
+    }
 }

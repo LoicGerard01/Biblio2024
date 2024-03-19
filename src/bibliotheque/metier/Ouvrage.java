@@ -1,4 +1,4 @@
-package biblio.metier;
+package bibliotheque.metier;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -8,7 +8,7 @@ public abstract class Ouvrage {
     protected String titre;
     protected int ageMin;
     protected LocalDate dateParution;
-    protected TypeOuvrage typeOuvrage;
+    protected TypeOuvrage to;
     protected double prixLocation;
     protected String langue;
     protected String genre;
@@ -17,11 +17,11 @@ public abstract class Ouvrage {
     protected List<Exemplaire> lex = new ArrayList<>();
 
 
-    public Ouvrage(String titre, int ageMin, LocalDate dateParution, TypeOuvrage typeOuvrage, double prixLocation, String langue, String genre) {
+    public Ouvrage(String titre, int ageMin, LocalDate dateParution, TypeOuvrage to, double prixLocation, String langue, String genre) {
         this.titre = titre;
         this.ageMin = ageMin;
         this.dateParution = dateParution;
-        this.typeOuvrage = typeOuvrage;
+        this.to = to;
         this.prixLocation = prixLocation;
         this.langue = langue;
         this.genre = genre;
@@ -51,12 +51,12 @@ public abstract class Ouvrage {
         this.dateParution = dateParution;
     }
 
-    public TypeOuvrage getTypeOuvrage() {
-        return typeOuvrage;
+    public TypeOuvrage getTo() {
+        return to;
     }
 
-    public void setTo(TypeOuvrage typeOuvrage) {
-        this.typeOuvrage = typeOuvrage;
+    public void setTo(TypeOuvrage to) {
+        this.to = to;
     }
 
     public double getPrixLocation() {
@@ -99,25 +99,44 @@ public abstract class Ouvrage {
         this.lex = lex;
     }
 
-    public void listerExemplaires(){
-
-    }
-    public void listerExemplaires(boolean enLocation){
-
-    }
-
-    public abstract double amendeRetard(int njours);
-
     @Override
     public String toString() {
         return "Ouvrage{" +
                 "titre='" + titre + '\'' +
                 ", ageMin=" + ageMin +
                 ", dateParution=" + dateParution +
-                ", typeOuvrage=" + typeOuvrage +
+                ", to=" + to +
                 ", prixLocation=" + prixLocation +
                 ", langue='" + langue + '\'' +
                 ", genre='" + genre + '\'' +
                 '}';
+    }
+    public abstract double amendeRetard(int njours);
+    public void addAuteur(Auteur a ){
+        lauteurs.add(a);
+        a.getLouvrage().add(this);
+    }
+
+    public void remove(Auteur a){
+        lauteurs.remove(a);
+        a.getLouvrage().remove(this);
+    }
+    public void addExemplaire(Exemplaire e){
+        lex.add(e);
+        e.setOuvrage(this);
+    }
+
+    public void remove(Exemplaire e){
+        lex.remove(e);
+        e.setOuvrage(null);
+    }
+    public List<Exemplaire>listerExemplaires(){
+        //TODO lister exemplaires ouvrage
+        return null;
+    }
+
+    public List<Exemplaire>listerExemplaires(boolean enLocation){
+        //TODO lister exemplaires ouvrage en location
+        return null;
     }
 }
