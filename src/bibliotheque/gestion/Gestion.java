@@ -5,10 +5,7 @@ import bibliotheque.utilitaires.Utilitaire;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class Gestion {
     Scanner sc = new Scanner(System.in);
@@ -158,6 +155,12 @@ public class Gestion {
         lex.add(ex);
         System.out.println("exemplaire créé");
         //TODO attribuer rayon
+
+        System.out.println("rayons : ");
+        int choixRayon = Utilitaire.choixListe(lrayon);
+        ex.setRayon(lrayon.get(choix-1));
+        System.out.printf("rayon attribué");
+
     }
 
     private void gestOuvrages() {
@@ -211,10 +214,27 @@ public class Gestion {
                             o=new DVD(titre,ageMin,dp,ploc,langue,genre,code,dureeTotale,nbreBonus);
                             System.out.println("autres langues");
                             List<String> langues = new ArrayList<>(Arrays.asList("anglais","français","italien","allemand","fin"));
+
+                            Set<String> autreLangues = new HashSet<>();
+
                             do{
                                 choix=Utilitaire.choixListe(langues);
                                 if(choix==langues.size())break;
-                                ((DVD)o).getAutresLangues().add(langues.get(choix-1));//TODO vérifier unicité ou utiliser set et pas de doublon avec langue d'origine
+                                //TODO vérifier unicité ou utiliser set et pas de doublon avec langue d'origine
+                                String langueChoisie = langues.get(choix -1);
+                                if(!langueChoisie.equals(((DVD)o).getLangue())){
+                                    if(!autreLangues.contains(langueChoisie)){
+                                        autreLangues.add(langueChoisie);
+                                    }
+                                    else{
+                                        System.out.println("Langue déja présente");
+                                    }
+                                }
+
+
+
+
+
                             }while(true);
                            System.out.println("sous-titres");
                             do{

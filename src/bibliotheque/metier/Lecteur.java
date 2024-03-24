@@ -117,11 +117,20 @@ public class Lecteur {
 
     public List<Exemplaire> listerExemplairesEnLocation(){
         //TODO lister exemplaires en location lecteur
-        return null;
+
+        List<Exemplaire> lex = new ArrayList<Exemplaire>();
+
+        for(Location l : lloc){
+            lex.add(l.getExemplaire());
+        }
+
+
+        return lex;
     }
 
     public List<Exemplaire> listerExemplairesEnLoues(){
         //TODO lister exemplaires loues lecteur
+
         return null;
     }
 }
