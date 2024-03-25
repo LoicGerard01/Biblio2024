@@ -222,7 +222,7 @@ public class Gestion {
                                 if(choix==langues.size())break;
                                 //TODO vérifier unicité ou utiliser set et pas de doublon avec langue d'origine
                                 String langueChoisie = langues.get(choix -1);
-                                if(!langueChoisie.equals(((DVD)o).getLangue())){
+                                if(!langueChoisie.equals(o.getLangue())){
                                     if(!autreLangues.contains(langueChoisie)){
                                         autreLangues.add(langueChoisie);
                                     }
@@ -230,8 +230,6 @@ public class Gestion {
                                         System.out.println("Langue déja présente");
                                     }
                                 }
-
-
 
 
 
@@ -247,6 +245,15 @@ public class Gestion {
            louv.add(o);
         System.out.println("ouvrage créé");
         //TODO ajouter 1 auteur à la liste des auteurs
+        System.out.println("nom de l'auteur : ");
+        String nom = sc.nextLine();
+        System.out.println("prenom de l'auteur : ");
+        String prenom = sc.nextLine();
+        System.out.println("nationalité de l'auteur");
+        String nationalite = sc.nextLine();
+        o.addAuteur(new Auteur(nom,prenom,nationalite));
+
+
     }
 
        private void gestAuteurs() {
