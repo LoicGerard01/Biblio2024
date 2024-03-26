@@ -130,7 +130,13 @@ public class Lecteur {
 
     public List<Exemplaire> listerExemplairesEnLoues(){
         //TODO lister exemplaires loues lecteur
+        List<Exemplaire> lex = new ArrayList<Exemplaire>();
 
-        return null;
+        for(Location l : lloc){
+            if(!l.getLoueur().equals(null)){
+                lex.add(l.getExemplaire());
+            }
+        }
+        return lex;
     }
 }
