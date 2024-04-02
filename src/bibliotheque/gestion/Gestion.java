@@ -7,10 +7,7 @@ import bibliotheque.utilitaires.LivreFactoryBeta;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 import static bibliotheque.utilitaires.Utilitaire.choixListe;
 
@@ -184,18 +181,48 @@ public class Gestion {
 
     private void gestRayons() {
         System.out.println("code ");
-        String code=sc.next();
+        String code = sc.next();
         System.out.println("genre ");
-        String genre=sc.next();
-        Rayon r = new Rayon(code,genre);
+        String genre = sc.next();
+        Rayon r = new Rayon(code, genre);
         System.out.println("rayon créé");
         lrayon.add(r);
-        int  choix = choixListe(lex);
-        r.addExemplaire(lex.get(choix-1));
+        //int choix = choixListe(lex);
+        //r.addExemplaire(lex.get(choix-1));
         //TODO attribuer par une boucle plusieurs exemplaires, les exemplaires sont triés par ordre de titre de l'ouvrage ,
         //  ne proposer que les exemplaires qui ne sont pas dans déjà présents dans ce rayon et qui ne sont dans aucun autre rayon
-    }
+        List<Exemplaire> exemplairesNonPresent = new ArrayList<>();
 
+        for (Exemplaire exemplaire : lex) {
+            boolean dejaPresent = false;
+
+            for (Rayon rayon : lrayon) {
+                if (rayon.getLex().contains(exemplaire)) {
+                    dejaPresent = true;
+                    break;
+                }
+            }
+            if (!dejaPresent) {
+                exemplairesNonPresent.add(exemplaire);
+            }
+        }
+        exemplairesNonPresent.sort(Comparator.comparing(e -> e.getOuvrage().getTitre()));
+        System.out.println("Liste des exemplaires : ");
+        for (Exemplaire exemplaire : exemplairesNonPresent) {
+            System.out.println(exemplaire);
+        }
+        do {
+            int choix = choixListe(exemplairesNonPresent);
+            String conf = "";
+            r.addExemplaire(exemplairesNonPresent.get(choix - 1));
+            do {
+                System.out.println("encore ? (o ou n)");
+                conf = sc.nextLine();
+            } while (!conf.equals("o") || !conf.equals("n"));
+            if(conf.equals("n")) return;
+        } while (true);
+
+    }
     private void gestExemplaires() {
         System.out.println("matricule ");
         String mat=sc.next();
@@ -276,8 +303,6 @@ public class Gestion {
                             ;break;
             }*/
 
-
-
         TypeOuvrage[] tto = TypeOuvrage.values();
         List<TypeOuvrage> lto = new ArrayList<>(Arrays.asList(tto));
         int choix = choixListe(lto);
@@ -292,10 +317,38 @@ public class Gestion {
         o = lof.get(choix-1).create();*/
         louv.add(o);
         System.out.println("ouvrage créé");
-         choix = choixListe(laut);
-        o.addAuteur(laut.get(choix-1));
+        Set<Auteur> auteursDejaAjoutes = new HashSet<>();
+     //    choix = choixListe(laut);
+      //  o.addAuteur(laut.get(choix-1));
         //TODO attribuer auteurs par boucle, les auteur sont triés par ordre de nom et prénom,
         // ne pas proposer un auteur déjà présent dans la liste des auteurs de cet ouvrage
+
+        Collections.sort(laut,Comparator.comparing(Auteur::getNom));
+        while (true) {
+            choix = choixListe(laut);
+            Auteur auteurChoisi = laut.get(choix - 1);
+
+            // Vérifier si l'auteur choisi est déjà associé à l'ouvrage
+            if (!o.getLauteurs().contains(auteurChoisi) && !auteursDejaAjoutes.contains(auteurChoisi)) {
+                o.addAuteur(auteurChoisi);
+                auteursDejaAjoutes.add(auteurChoisi);
+                System.out.println("Auteur ajouté à l'ouvrage.");
+            } else {
+                System.out.println("Cet auteur est déjà associé à cet ouvrage.");
+            }
+
+            System.out.println("Voulez-vous ajouter un autre auteur à cet ouvrage ? (O/N)");
+            String reponse = sc.nextLine().trim();
+            if (!reponse.equalsIgnoreCase("O")) {
+                break;
+            }
+        }
+
+
+
+
+
+
     }
 
        private void gestAuteurs() {
@@ -308,11 +361,32 @@ public class Gestion {
         Auteur a  = new Auteur(nom,prenom,nat);
         laut.add(a);
         System.out.println("écrivain créé");
-        int choix = choixListe(louv);
-        a.addOuvrage(louv.get(choix-1));
+        Set<Ouvrage> ouvragesDejaAjoutes = new HashSet<>();
+
+           //int choix = choixListe(louv);
+        //a.addOuvrage(louv.get(choix-1));
         //TODO attribuer ouvrages par boucle
         // les ouvrages sont triés par ordre de titre
         // ne pas proposer un ouvrage déjà présent dans la liste des ouvrages de cet auteur
+           Collections.sort(louv,Comparator.comparing(Ouvrage::getTitre));
+           while (true) {
+               int choix = choixListe(louv);
+               Ouvrage ouvrageChoisi = louv.get(choix - 1);
+
+               if (!a.getLouvrage().contains(ouvrageChoisi) && !ouvragesDejaAjoutes.contains(ouvrageChoisi)) {
+                   a.addOuvrage(ouvrageChoisi);
+                   ouvragesDejaAjoutes.add(ouvrageChoisi);
+                   System.out.println("Ouvrage ajouté à l'écrivain.");
+               } else {
+                   System.out.println("Cet ouvrage est déjà associé à cet écrivain.");
+               }
+
+               System.out.println("Voulez-vous ajouter un autre ouvrage à cet écrivain ? (O/N)");
+               String reponse = sc.nextLine().trim();
+               if (!reponse.equalsIgnoreCase("O")) {
+                   break;
+               }
+           }
     }
 
     public static void main(String[] args) {
