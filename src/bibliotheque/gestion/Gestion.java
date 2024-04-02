@@ -105,6 +105,41 @@ public class Gestion {
 
     private void gestRestitution() {
         //TODO lister exemplaires en location , choisir l'un d'entre eux, enregistrer sa restitution et éventuellement changer état
+        System.out.println("Liste des exemplaires en location :");
+        for (Location loc : lloc) {
+            if (loc.getLoueur() != null){
+                System.out.println("ID : " + loc.getExemplaire().getMatricule() + ", Titre : " + loc.getExemplaire().getOuvrage().getTitre());
+            }
+
+        }
+        Scanner sc=new Scanner(System.in);
+        System.out.println("id de l'exemeplaire a restituer ");
+        String idExemplaire = sc.nextLine();
+
+        boolean ok = false;
+        Exemplaire exemplaire = null;
+        for(Location loc : lloc){
+            if (loc.getExemplaire().getMatricule().equals(idExemplaire)) {
+                exemplaire = loc.getExemplaire();
+                ok = true;
+                break;
+            }
+        }
+        if(!ok){
+            System.out.println("exemplaire non trouvé");
+            return;
+        }
+        for(Location loc: lloc){
+            if (loc.getExemplaire().equals(exemplaire)) {
+                loc.setDateRestitution(LocalDate.now());
+                loc.setLoueur(null);
+                loc.setDateLocation(null);
+                System.out.println("Restitution enregistrée avec succès");
+                break;
+            }
+        }
+
+
     }
 
     private void gestLocations() {
