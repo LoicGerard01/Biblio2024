@@ -20,8 +20,8 @@ public class Gestion {
     private List<Ouvrage> louv= new ArrayList<>();
     private List<Exemplaire> lex = new ArrayList<>();
     private List<Rayon> lrayon= new ArrayList<>();
-    private List<Location> lloc = new ArrayList<>();
-
+ //   private List<Location> lloc = new ArrayList<>();
+    public static final Map<Exemplaire,Lecteur> LOCATIONS  = new HashMap<>();
 
     public void populate(){
         Auteur a = new Auteur("Verne","Jules","France");
@@ -103,6 +103,7 @@ public class Gestion {
 
     private void gestRestitution() {
         //TODO lister exemplaires en location , choisir l'un d'entre eux, enregistrer sa restitution et éventuellement changer état
+
     }
 
     private void gestLocations() {

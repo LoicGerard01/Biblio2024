@@ -3,8 +3,11 @@ package bibliotheque.metier;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
+
+import static bibliotheque.gestion.Gestion.LOCATIONS;
 
 public class Exemplaire {
 
@@ -13,12 +16,7 @@ public class Exemplaire {
 
     private Ouvrage ouvrage;
     private Rayon rayon;
-
     private String etat;
-
-
-    private List<Location> lloc= new ArrayList<>();
-
 
     public Exemplaire(String matricule, String descriptionEtat,Ouvrage ouvrage){
         this.matricule = matricule;
@@ -76,15 +74,6 @@ public class Exemplaire {
         this.rayon=rayon;
         this.rayon.getLex().add(this);
     }
-
-    public List<Location> getLloc() {
-        return lloc;
-    }
-
-    public void setLloc(List<Location> lloc) {
-        this.lloc = lloc;
-    }
-
     @Override
     public String toString() {
         return "Exemplaire{" +
@@ -100,18 +89,9 @@ public class Exemplaire {
     }
 
     public Lecteur lecteurActuel(){
-        if(enLocation()) return lloc.get(lloc.size()-1).getLoueur();
-        return null;
+        if(enLocation()) return LOCATIONS.get(this);
+    return null;
     }
-    public List<Lecteur> lecteurs(){
-        List<Lecteur> ll = new ArrayList<>();
-        for(Location l : lloc){
-            if(ll.contains(l)) continue; //par la suite utiliser set
-            ll.add(l.getLoueur());
-        }
-        return null;
-    }
-
     public void envoiMailLecteurActuel(Mail mail){
         if(lecteurActuel()!=null) System.out.println("envoi de "+mail+ " à "+lecteurActuel().getMail());
         else System.out.println("aucune location en cours");
@@ -129,6 +109,11 @@ public class Exemplaire {
     }
 
     public boolean enRetard(){ //par retard on entend pas encore restitué et en retard
+        Lecteur l,lrech;
+        Exemplaire e,erech;
+
+        e = new Exemplaire();
+
         if(lloc.isEmpty()) return false;
         Location l = lloc.get(lloc.size()-1); //la location en cours est la dernière  de la liste, sauf si elle est terminée
         if(l.getDateRestitution()==null && l.getDateLocation().plusDays(ouvrage.njlocmax()).isAfter(LocalDate.now())) return true;
@@ -145,9 +130,8 @@ public class Exemplaire {
 
 
     public boolean enLocation(){
-        if(lloc.isEmpty()) return false;
-        Location l = lloc.get(lloc.size()-1);//la location en cours est la dernière de la liste
-        if(l.getDateRestitution()==null) return true;
+        if(LOCATIONS.isEmpty()) return false;
+        if(LOCATIONS) return true;
         return false;
     }
 
