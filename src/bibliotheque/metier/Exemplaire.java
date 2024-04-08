@@ -87,11 +87,6 @@ public class Exemplaire {
     public void modifierEtat(String etat){
        setDescriptionEtat(etat);
     }
-
-    public Lecteur lecteurActuel(){
-        if(enLocation()) return LOCATIONS.get(this);
-    return null;
-    }
     public void envoiMailLecteurActuel(Mail mail){
         if(lecteurActuel()!=null) System.out.println("envoi de "+mail+ " à "+lecteurActuel().getMail());
         else System.out.println("aucune location en cours");
@@ -107,28 +102,10 @@ public class Exemplaire {
             }
         }
     }
-
-    public boolean enRetard(){ //par retard on entend pas encore restitué et en retard
-        Lecteur l,lrech;
-        Exemplaire e,erech;
-
-        e = new Exemplaire();
-
-        if(lloc.isEmpty()) return false;
-        Location l = lloc.get(lloc.size()-1); //la location en cours est la dernière  de la liste, sauf si elle est terminée
-        if(l.getDateRestitution()==null && l.getDateLocation().plusDays(ouvrage.njlocmax()).isAfter(LocalDate.now())) return true;
-        return false;
+    public Lecteur lecteurActuel(){
+        if(enLocation()) return LOCATIONS.get(this);
+        return null;
     }
-
-    public int joursRetard(){
-        if(!enRetard()) return 0;
-        Location l = lloc.get(lloc.size()-1);//la location en cours est la dernière de la liste
-        LocalDate dateLim = l.getDateLocation().plusDays(ouvrage.njlocmax());
-        int njretard = (int)ChronoUnit.DAYS.between(dateLim, LocalDate.now());
-        return njretard;
-    }
-
-
     public boolean enLocation(){
         if(LOCATIONS.isEmpty()) return false;
         if(LOCATIONS) return true;
