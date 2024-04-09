@@ -13,10 +13,10 @@ public class Exemplaire {
 
     private String matricule;
     private String descriptionEtat;
-
     private Ouvrage ouvrage;
     private Rayon rayon;
     private String etat;
+    public static final HashMap<Exemplaire,Lecteur> LOCATIONS = new HashMap<>();
 
     public Exemplaire(String matricule, String descriptionEtat,Ouvrage ouvrage){
         this.matricule = matricule;
@@ -102,17 +102,22 @@ public class Exemplaire {
             }
         }
     }
+
+    public void louer(Lecteur lecteur){
+        if(!enLocation()){
+            LOCATIONS.put(this,lecteur);
+        }
+    }
+    public void restituer(){
+        if(enLocation()){
+            LOCATIONS.remove(this);
+        }
+    }
+
     public Lecteur lecteurActuel(){
-        if(enLocation()) return LOCATIONS.get(this);
-        return null;
+        return LOCATIONS.get(this);
     }
     public boolean enLocation(){
-        if(LOCATIONS.isEmpty()) return false;
-        if(LOCATIONS) return true;
-        return false;
+        return LOCATIONS.containsValue(this);
     }
-
-
-
-
 }
