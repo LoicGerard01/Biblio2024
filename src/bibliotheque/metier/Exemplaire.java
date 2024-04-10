@@ -1,22 +1,19 @@
 package bibliotheque.metier;
 
-import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Objects;
 
-import static bibliotheque.gestion.Gestion.LOCATIONS;
+import static bibliotheque.gestion.GestionOld.LOCATIONS;
 
 public class Exemplaire {
 
     private String matricule;
     private String descriptionEtat;
+
     private Ouvrage ouvrage;
     private Rayon rayon;
+
     private String etat;
-    public static final HashMap<Exemplaire,Lecteur> LOCATIONS = new HashMap<>();
+
 
     public Exemplaire(String matricule, String descriptionEtat,Ouvrage ouvrage){
         this.matricule = matricule;
@@ -74,6 +71,7 @@ public class Exemplaire {
         this.rayon=rayon;
         this.rayon.getLex().add(this);
     }
+
     @Override
     public String toString() {
         return "Exemplaire{" +
@@ -87,37 +85,19 @@ public class Exemplaire {
     public void modifierEtat(String etat){
        setDescriptionEtat(etat);
     }
+
+    public Lecteur lecteurActuel(){
+        if(enLocation()) return LOCATIONS.get(this);
+        return null;
+    }
+
     public void envoiMailLecteurActuel(Mail mail){
         if(lecteurActuel()!=null) System.out.println("envoi de "+mail+ " à "+lecteurActuel().getMail());
         else System.out.println("aucune location en cours");
     }
-    public void envoiMailLecteurs(Mail mail){
-        List<Lecteur>ll=lecteurs();
-        if(ll.isEmpty()){
-            System.out.println("aucun lecteur enregistré");
-        }
-        else{
-            for(Lecteur l: ll){
-                System.out.println("envoi de "+mail+ " à "+l.getMail());
-            }
-        }
-    }
 
-    public void louer(Lecteur lecteur){
-        if(!enLocation()){
-            LOCATIONS.put(this,lecteur);
-        }
-    }
-    public void restituer(){
-        if(enLocation()){
-            LOCATIONS.remove(this);
-        }
-    }
 
-    public Lecteur lecteurActuel(){
-        return LOCATIONS.get(this);
-    }
     public boolean enLocation(){
-        return LOCATIONS.containsValue(this);
+        return LOCATIONS.get(this) !=null ;
     }
 }
