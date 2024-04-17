@@ -1,4 +1,4 @@
 package bibliotheque.mvc.controller;
 
-public class LecteurController {
+public class OuvrageController {
 }

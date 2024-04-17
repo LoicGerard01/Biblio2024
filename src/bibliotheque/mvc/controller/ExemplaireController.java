@@ -1,19 +1,19 @@
 package bibliotheque.mvc.controller;
 
+import bibliotheque.metier.Auteur;
 import bibliotheque.metier.Exemplaire;
 import bibliotheque.mvc.model.DAOExemplaire;
 import bibliotheque.mvc.view.AbstractViewExemplaire;
 
 import java.util.List;
-import java.util.Set;
 
 public class ExemplaireController {
     protected DAOExemplaire model;
     protected AbstractViewExemplaire view;
 
     public ExemplaireController(DAOExemplaire model,AbstractViewExemplaire view){
-        this.model = model;
-        this.view = view;
+        this.model=model;
+        this.view=view;
         this.view.setController(this);
     }
     public List<Exemplaire> getAll(){
@@ -21,10 +21,12 @@ public class ExemplaireController {
         return l;
     }
     public Exemplaire add(Exemplaire ex){
-        Exemplaire nex = model.add(ex);
+        Exemplaire nex=model.add(ex);
         return nex;
     }
-    public boolean remove(Exemplaire ex){return model.remove(ex);}
+    public boolean remove(Exemplaire ex){
+        return model.remove(ex);
+    }
     public Exemplaire update(Exemplaire ex){
         return model.update(ex);
     }
@@ -33,3 +35,5 @@ public class ExemplaireController {
     }
 
 }
+
+

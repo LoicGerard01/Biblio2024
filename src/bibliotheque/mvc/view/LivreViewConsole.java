@@ -1,4 +1,4 @@
 package bibliotheque.mvc.view;
 
-public class RayonViewConsole {
+public class LivreViewConsole {
 }
