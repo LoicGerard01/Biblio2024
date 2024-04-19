@@ -100,6 +100,23 @@ public class GestionOld {
 
     private void gestRestitution() {
         //TODO lister exemplaires en location , choisir l'un d'entre eux, enregistrer sa restitution et éventuellement changer état
+        int choix;
+        List<Exemplaire> exLoc = new ArrayList<>();
+        for(Exemplaire exemplaire : LOCATIONS.keySet()){
+            exLoc.add(exemplaire);
+        }
+        if(exLoc.size()==0){
+            System.out.println("aucun exemplaire en location");
+            return;
+        }
+        choix = choixListe(exLoc);
+        Exemplaire exemplaire = exLoc.get(choix-1);
+        if (choix==0)return;
+        LOCATIONS.remove(exemplaire);
+        System.out.println("etat de l'exemplaire ?");
+        String etat =sc.nextLine();
+        exemplaire.setDescriptionEtat(etat);
+        System.out.println("exemplaire restitué");
     }
 
     private void gestLocations() {

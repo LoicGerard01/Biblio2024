@@ -1,15 +1,10 @@
 package bibliotheque.mvc.view;
 
-import bibliotheque.metier.Exemplaire;
-import bibliotheque.metier.Mail;
-import bibliotheque.metier.Ouvrage;
-import bibliotheque.metier.Rayon;
+import bibliotheque.metier.*;
 import bibliotheque.mvc.GestionMVC;
 import bibliotheque.mvc.controller.ControllerSpecialExemplaire;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 import static bibliotheque.utilitaires.Utilitaire.*;
 
@@ -102,11 +97,13 @@ public class ExemplaireViewConsole extends AbstractView<Exemplaire> {
                 System.out.println("ouvrage : ");
                 List<Ouvrage> lo = GestionMVC.ov.getAll();
                 //TODO présenter les ouvrages par ordre de titre ==> classe anonyme
+                lo.sort((o1, o2) -> o1.getTitre().compareTo(o2.getTitre()));
                 int ch = choixListe(lo);
                 a = new Exemplaire(mat, descr,lo.get(ch-1));
                 System.out.println("rayon");
                 List<Rayon> lr = GestionMVC.rv.getAll();
                 //TODO présenter les rayons par ordre de code ==> classe anonyme
+                lr.sort((o1, o2) -> o1.getCodeRayon().compareTo(o2.getCodeRayon()));
                 ch= choixListe(lr);
                 a.setRayon(lr.get(ch-1));
                 break;
@@ -155,6 +152,13 @@ public class ExemplaireViewConsole extends AbstractView<Exemplaire> {
 
     private void louer(Exemplaire a) {
         //TODO chosir un lecteur et enregistrer la location dans LOCATIONS
+        int choix;
+        List<Lecteur> ll = GestionMVC.lv.getAll();
+        choix = choixListe(ll);
+        GestionMVC.LOCATIONS.put(a,ll.get(choix-1));
+        System.out.println("exemplaire : "+a +"associé à :" +ll.get(choix-1));
+
+
     }
 
 
