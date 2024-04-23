@@ -113,13 +113,7 @@ public class OuvrageViewConsole extends AbstractView<Ouvrage> {
             if(ok) break;
         }while (true);
         //TODO trier les auteurs présentés par ordre de nom et prénom  ==>  classe anonyme
-
-
-
         //TODO ne pas présenter les auteurs déjà enregistrés pour cet ouvrage
-
-
-
 
         controller.add(ouvrage);
     }
