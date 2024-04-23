@@ -1,15 +1,13 @@
 package bibliotheque.mvc.view;
 
+import bibliotheque.metier.Auteur;
 import bibliotheque.metier.Exemplaire;
 import bibliotheque.metier.Ouvrage;
 import bibliotheque.metier.TypeOuvrage;
 import bibliotheque.mvc.controller.ControllerSpecialOuvrage;
 import bibliotheque.utilitaires.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 import static bibliotheque.utilitaires.Utilitaire.*;
 
@@ -59,6 +57,7 @@ public class OuvrageViewConsole extends AbstractView<Ouvrage> {
 
     public void rechercher() {
         //TODO rechercher ouvrage en demandant type d'ouvrage, puis l'info unique relative à au type recherché
+
     }
 
 
@@ -82,13 +81,47 @@ public class OuvrageViewConsole extends AbstractView<Ouvrage> {
         TypeOuvrage[] tto = TypeOuvrage.values();
         List<TypeOuvrage> lto = new ArrayList<>(Arrays.asList(tto));
         int choix = Utilitaire.choixListe(lto);
-        Ouvrage a = null;
+        Ouvrage ouvrage = null;
         List<OuvrageFactory> lof = new ArrayList<>(Arrays.asList(new LivreFactory(),new CDFactory(),new DVDFactory()));
-        a = lof.get(choix-1).create();
+        ouvrage = lof.get(choix-1).create();
+
         //TODO affecter un ou plusieurs auteurs
+
+        Set<Auteur> auteurExistants = ouvrage.getLauteurs();
+        List<Auteur> nouveauAuteurs = new ArrayList<>() ;
+
+        for(Auteur auteur : auteurExistants){
+            if(!nouveauAuteurs.contains(auteur)){
+                nouveauAuteurs.add(auteur);
+            }
+        }
+
+        Collections.sort(nouveauAuteurs, new Comparator<Auteur>() {
+            @Override
+            public int compare(Auteur o1, Auteur o2) {
+                return o1.getNom().compareTo(o2.getNom());
+            }
+        });
+
+        do{
+            boolean ok = false;
+            affMsg("Selection Auteur");
+            int choixAuteur = choixListe(nouveauAuteurs);
+
+            ouvrage.addAuteur(nouveauAuteurs.get(choixAuteur-1));
+
+            if(ok) break;
+        }while (true);
         //TODO trier les auteurs présentés par ordre de nom et prénom  ==>  classe anonyme
+
+
+
         //TODO ne pas présenter les auteurs déjà enregistrés pour cet ouvrage
-        controller.add(a);
+
+
+
+
+        controller.add(ouvrage);
     }
 
     protected void special() {

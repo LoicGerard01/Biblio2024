@@ -84,7 +84,7 @@ public class LecteurViewConsole extends AbstractView<Lecteur> {
                 String nom = modifyIfNotBlank("nom", l.getNom());
                 String prenom = modifyIfNotBlank("prénom", l.getPrenom());
                 String mail = modifyIfNotBlank("nationalité", l.getMail());
-                String date = modifyIfNotBlank("date", String.valueOf(l.getDn()));
+                String date = modifyIfNotBlank("date (dd mm yyyy)", String.valueOf(l.getDn()));
                 String adresse = modifyIfNotBlank("adresse",l.getAdresse());
                 String tel = modifyIfNotBlank("tel",l.getTel());
 

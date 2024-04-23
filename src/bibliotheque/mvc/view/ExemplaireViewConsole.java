@@ -96,13 +96,17 @@ public class ExemplaireViewConsole extends AbstractView<Exemplaire> {
                 String descr = sc.nextLine();
                 System.out.println("ouvrage : ");
                 List<Ouvrage> lo = GestionMVC.ov.getAll();
+
                 //TODO présenter les ouvrages par ordre de titre ==> classe anonyme
+
                 lo.sort((o1, o2) -> o1.getTitre().compareTo(o2.getTitre()));
                 int ch = choixListe(lo);
                 a = new Exemplaire(mat, descr,lo.get(ch-1));
                 System.out.println("rayon");
                 List<Rayon> lr = GestionMVC.rv.getAll();
+
                 //TODO présenter les rayons par ordre de code ==> classe anonyme
+
                 lr.sort((o1, o2) -> o1.getCodeRayon().compareTo(o2.getCodeRayon()));
                 ch= choixListe(lr);
                 a.setRayon(lr.get(ch-1));
