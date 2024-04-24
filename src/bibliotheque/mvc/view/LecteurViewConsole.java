@@ -3,7 +3,6 @@ package bibliotheque.mvc.view;
 import bibliotheque.metier.Lecteur;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -84,15 +83,9 @@ public class LecteurViewConsole extends AbstractView<Lecteur> {
                 String nom = modifyIfNotBlank("nom", l.getNom());
                 String prenom = modifyIfNotBlank("prénom", l.getPrenom());
                 String mail = modifyIfNotBlank("nationalité", l.getMail());
-                String date = modifyIfNotBlank("date (dd mm yyyy)", String.valueOf(l.getDn()));
-                String adresse = modifyIfNotBlank("adresse",l.getAdresse());
-                String tel = modifyIfNotBlank("tel",l.getTel());
-
-                LocalDate date1 = LocalDate.parse(date, DateTimeFormatter.ofPattern("dd mm yyyy"));
                 l.setNom(nom);
                 l.setPrenom(prenom);
                 l.setMail(mail);
-                l.setDn(date1);
                 //TODO gérer autres valeurs
                 break;
             } catch (Exception e) {
